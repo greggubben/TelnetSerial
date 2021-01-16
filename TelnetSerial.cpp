@@ -78,10 +78,16 @@ void TelnetSerial::handle() {
     }
   }
 
+  // This causes weird things due to the loopback.
+  // Need to find a way to put characters into the stream without loopback
+  // Would not recommend taking input from telnet client
   // check if telnet client sent data to recieve
   while (_telnetServerClient.available() && Serial.availableForWrite() > 0) {
     // working char by char is not very efficient
     Serial.write(_telnetServerClient.read());
+    //char c =_telnetServerClient.read();
+    //Serial.write(c);
+    //originalSerial->print(c);
   }
 
   // Determine max amount of data the Telnet Client can receive at a time
